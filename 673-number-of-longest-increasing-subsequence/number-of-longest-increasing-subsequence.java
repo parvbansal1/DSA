@@ -3,10 +3,10 @@ class Solution {
         int n = nums.length;
         int len[] = new int[n];
         int count[] = new int[n];
-        Arrays.fill(len,1);
-        Arrays.fill(count,1);
         int max = 1;
         for(int i=0;i<n;i++){
+            len[i] = 1;
+            count[i] = 1;
             for(int j=0;j<i;j++){
                 if(nums[i]>nums[j]){
                     if(len[j] + 1 > len[i]) {
