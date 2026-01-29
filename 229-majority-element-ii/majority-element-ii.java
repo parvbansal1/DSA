@@ -7,9 +7,9 @@ class Solution {
         for (int i = 0; i < n; i++) {
             hm.put(nums[i], hm.getOrDefault(nums[i], 0) + 1);
         }
-        for (Map.Entry<Integer, Integer> h : hm.entrySet()) {
-            if (h.getValue() > m) ans.add(h.getKey());
-        }
+        hm.forEach((key, value) -> {
+             if (value > m) ans.add(key);
+        });
         return ans;
     }
 }
