@@ -2,35 +2,37 @@ class Solution {
     public int maxAreaOfIsland(int[][] grid) {
         int n = grid.length;
         int m = grid[0].length;
-        boolean vis[][] = new boolean[n][m];
         int max = 0;
+
         for (int i = 0; i < n; i++) {
             for (int j = 0; j < m; j++) {
-                if (!vis[i][j] && grid[i][j] == 1) {
-                    max = Math.max( max, bfs(i, j, grid, vis) );
+                if (grid[i][j] == 1) {
+                    max = Math.max(max, bfs(i, j, grid));
                 }
             }
         }
         return max;
     }
 
-    public int bfs(int i, int j, int arr[][], boolean vis[][]) {
-        int n = arr.length;
-        int m = arr[0].length;
+    public int bfs(int i, int j, int[][] grid) {
+        int n = grid.length, m = grid[0].length;
         Queue<int[]> q = new LinkedList<>();
-        q.add(new int[] { i, j });
-        vis[i][j] = true;
-        int dir[][] = { { 0, 1 }, { 1, 0 }, { -1, 0 }, { 0, -1 } };
+        q.add(new int[]{i, j});
+        grid[i][j] = 0;  
+
+        int[][] dir = {{0,1},{1,0},{-1,0},{0,-1}};
         int count = 1;
+
         while (!q.isEmpty()) {
-            int[] tmp = q.remove();
-            int r = tmp[0], c = tmp[1];
-            for(int a[]:dir){
-                int nr = a[0] + r, nc = a[1] + c;
-                if(nr>=0 && nc>=0 && nr<=n-1 && nc<=m-1 && arr[nr][nc]==1 && !vis[nr][nc]){
+            int[] cur = q.remove();
+            for (int[] d : dir) {
+                int nr = cur[0] + d[0];
+                int nc = cur[1] + d[1];
+
+                if (nr >= 0 && nc >= 0 && nr < n && nc < m && grid[nr][nc] == 1) {
                     count++;
-                    q.add(new int[]{nr,nc});
-                    vis[nr][nc] = true;
+                    grid[nr][nc] = 0;
+                    q.add(new int[]{nr, nc});
                 }
             }
         }
