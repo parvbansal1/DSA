@@ -1,15 +1,12 @@
 class Solution {
-    public char nextGreatestLetter(char[] arr, char target) {
+    public char nextGreatestLetter(char[] arr, char x) {
         int n = arr.length;
-        int a = target - '0';
-        char min =  Character.MAX_VALUE;
-        for(int i=0;i<n;i++){
-            char b = arr[i];
-            if( b-'0' > a && min-'0' > b-'0' ){
-                min = b;
-            }
+        int l = 0, r = n - 1;
+        while (l <= r) {
+            int mid = l + (r - l) / 2;
+            if (arr[mid] <= x) l = mid + 1;
+            else r = mid - 1;
         }
-        if(min==Character.MAX_VALUE) return arr[0];
-        return min;
+        return arr[l % n];
     }
 }
