@@ -1,23 +1,21 @@
 class Solution {
     public int[] sortByBits(int[] arr) {
-        int n = arr.length;
+        Integer[] temp = new Integer[arr.length];
         
-        for(int i=0;i<n;i++){
-            for(int j=i+1;j<n;j++){
-                int x = Integer.bitCount(arr[i]);
-                int y = Integer.bitCount(arr[j]);
-                if(x > y){
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
-                else if(x == y && arr[i] > arr[j] ){
-                    int temp = arr[i];
-                    arr[i] = arr[j];
-                    arr[j] = temp;
-                }
+        for(int i = 0; i < arr.length; i++) temp[i] = arr[i];
+        
+        Arrays.sort(temp, (a, b) -> {
+            int bitA = Integer.bitCount(a);
+            int bitB = Integer.bitCount(b);
+            
+            if(bitA == bitB) {
+                return a - b;
             }
-        }
+            return bitA - bitB;
+        });
+
+        for(int i = 0; i < arr.length; i++) arr[i] = temp[i];
+        
         return arr;
     }
 }
