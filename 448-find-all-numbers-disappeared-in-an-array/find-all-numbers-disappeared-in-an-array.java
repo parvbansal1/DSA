@@ -1,13 +1,21 @@
 class Solution {
     public List<Integer> findDisappearedNumbers(int[] nums) {
+        List<Integer> list = new ArrayList<>();
         int n = nums.length;
-        HashSet<Integer> hs = new HashSet<>();
-        for (int i : nums) hs.add(i);
 
-        List<Integer> ans = new ArrayList<>();
-        for (int i = 1; i <= nums.length; i++) {
-            if (!hs.contains(i)) ans.add(i);
+        for (int i = 0; i < n; i++) {
+            int ind = Math.abs(nums[i]) - 1;
+            if (nums[ind] > 0) {
+                nums[ind] = -nums[ind];
+            }
         }
-        return ans;
+
+        for (int i = 0; i < n; i++) {
+            if (nums[i] > 0) {
+                list.add(i + 1);
+            }
+        }
+
+        return list;
     }
 }
