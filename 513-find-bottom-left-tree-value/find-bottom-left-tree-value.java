@@ -2,11 +2,7 @@ class Solution {
     public int findBottomLeftValue(TreeNode root) {
         TreeNode temp = root;
         while (temp.left != null || temp.right != null) {
-            if (temp.left == null)
-                temp = temp.right;
-            else if (temp.right == null)
-                temp = temp.left;
-            else if (height(temp.left) >= height(temp.right)) {
+            if (height(temp.left) >= height(temp.right)) {
                 temp = temp.left;
             } else
                 temp = temp.right;
