@@ -1,28 +1,27 @@
 class Solution {
+    int n;
+    int dp[][][];
     public int maxProfit(int[] prices) {
-        int n = prices.length;
-        int dp[][][] = new int[n + 1][3][2];
-        for (int a[][] : dp) {
-            for (int b[] : a)
-                Arrays.fill(b, -1);
+        n = prices.length;
+        dp = new int[n][2][3];
+        for(int i[][]:dp){
+            for(int j[] : i) Arrays.fill(j,-1);
         }
-        return ans(0, 2, 1, n, prices, dp);
+        return func(prices, 0, 1, 2);
     }
+    public int func(int arr[], int i, int buy, int day){
+        if(i == n || day == 0) return 0;
+        if(dp[i][buy][day] != -1) return dp[i][buy][day];
 
-    public int ans(int day, int trans, int buy, int n, int arr[],
-            int dp[][][]) {
-        if (day == n || trans == 0)
-            return 0;
-        if (dp[day][trans][buy] != -1)
-            return dp[day][trans][buy];
-        if (buy == 1) {
-            return dp[day][trans][buy] = 
-            Math.max(-arr[day] + ans(day + 1, trans, 0, n, arr, dp),
-                    ans(day + 1, trans, 1, n, arr, dp));
-        } else {
-            return dp[day][trans][buy] = 
-            Math.max(arr[day] + ans(day + 1, trans - 1, 1, n, arr, dp),
-                    ans(day + 1, trans, 0, n, arr, dp));
+        if(buy == 1){
+            int take = -arr[i] + func(arr,i+1,0, day);
+            int skip = func(arr,i+1,buy,day);
+            return dp[i][buy][day] = Math.max(take,skip);
+        }
+        else{
+            int take = arr[i] + func(arr,i+1,1, day-1);
+            int skip = func(arr,i+1,buy,day);
+            return dp[i][buy][day] = Math.max(take,skip);
         }
     }
 }
