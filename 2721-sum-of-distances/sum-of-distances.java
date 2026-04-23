@@ -1,33 +1,27 @@
 class Solution {
     public long[] distance(int[] nums) {
         int n = nums.length;
-        HashMap<Integer, List<Integer>> hm = new HashMap<>();
+        HashMap<Integer, Long> hm1 = new HashMap<>();
+        HashMap<Integer, Long> hm2 = new HashMap<>();
+        long[] ans = new long[n];
         for (int i = 0; i < n; i++) {
-            if (!hm.containsKey(nums[i])) {
-                hm.put(nums[i], new ArrayList<>());
-            }
-            hm.get(nums[i]).add(i);
+            int val = nums[i];
+            long c = hm1.getOrDefault(val, 0L);
+            long s = hm2.getOrDefault(val, 0L);
+            ans[i] += c * i - s;
+            hm1.put(val, c + 1);
+            hm2.put(val, s + i);
         }
-        long arr[] = new long[n];
-        for (List<Integer> temp : hm.values()) {
-            int size = temp.size();
-
-            long total = 0;
-            for (int x : temp) total += x;
-
-            long leftSum = 0;
-
-            for (int j = 0; j < size; j++) {
-                int idx = temp.get(j);
-                long left = (long) j * idx - leftSum;
-                long right = (total - leftSum - idx) - (long)
-                 (size - j - 1) * idx;
-
-                arr[idx] = left + right;
-                leftSum += idx;
-            }
+        hm1.clear();
+        hm2.clear();
+        for (int i = n - 1; i >= 0; i--) {
+            int val = nums[i];
+            long c = hm1.getOrDefault(val, 0L);
+            long s = hm2.getOrDefault(val, 0L);
+            ans[i] += s - c * i;
+            hm1.put(val, c + 1);
+            hm2.put(val, s + i);
         }
-
-        return arr;
+        return ans;
     }
 }
