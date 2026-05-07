@@ -10,6 +10,7 @@ class Solution {
                 int[] top = st.pop();
                 curr[0] = Math.max(curr[0], top[0]);
                 curr[1] = top[1];
+                curr[2] = i;
             }
 
             st.push(curr);
